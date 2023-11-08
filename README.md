@@ -32,7 +32,13 @@ Set up NextAuth.js: Configure NextAuth.js in your project with the `next-auth-ax
 // src/app/api/auth/[...nextauth]/route.ts
 import NextAuth from 'next-auth';
 import AxiosAdapter, { AdapterSettings } from 'next-auth-axios-adapter';
-import axios from 'axios';
+import {
+  AdapterAccount,
+  AdapterSession,
+  AdapterUser,
+  VerificationToken as AdapterVerificationToken,
+} from 'next-auth/adapters';
+import axios, { AxiosResponse } from 'axios';
 
 const settings: AdapterSettings = {
   baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/api`,
@@ -42,7 +48,8 @@ const settings: AdapterSettings = {
         method: 'POST',
         path: '/users',
         sendBody: user,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -50,7 +57,8 @@ const settings: AdapterSettings = {
       return {
         method: 'GET',
         path: `/users/${id}`,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -58,8 +66,9 @@ const settings: AdapterSettings = {
       return {
         method: 'POST',
         path: `/users/email`,
-        sendBody: { email: email },
-        selectedData: (res) => res.data.user,
+        sendBody: { email: email }, // optional
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -68,7 +77,8 @@ const settings: AdapterSettings = {
         method: 'POST',
         path: `/users/account`,
         sendBody: data,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -76,8 +86,9 @@ const settings: AdapterSettings = {
       return {
         method: 'PUT',
         path: `/users/${data.id}`,
-        sendBody: data, // isMongoDb: true (Auto convert id to _id)
-        selectedData: (res) => res.data.user,
+        sendBody: data,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -85,7 +96,8 @@ const settings: AdapterSettings = {
       return {
         method: 'DELETE',
         path: `/users/${id}`,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -94,7 +106,8 @@ const settings: AdapterSettings = {
         method: 'POST',
         path: `/accounts`,
         sendBody: data,
-        selectedData: (res) => res.data.account,
+        selectedData: (res: AxiosResponse<{ account: AdapterAccount }, any>) =>
+          res.data.account,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -103,7 +116,8 @@ const settings: AdapterSettings = {
         method: 'PUT',
         path: `/accounts/delete`,
         sendBody: data,
-        selectedData: (res) => res.data.account,
+        selectedData: (res: AxiosResponse<{ account: AdapterAccount }, any>) =>
+          res.data.account,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -111,7 +125,12 @@ const settings: AdapterSettings = {
       return {
         method: 'GET',
         path: `/sessions/session-tokens/${sessionToken}`,
-        selectedData: (res) => ({
+        selectedData: (
+          res: AxiosResponse<
+            { user: AdapterUser; session: AdapterSession },
+            any
+          >
+        ) => ({
           user: res.data.user,
           session: res.data.session,
         }),
@@ -123,7 +142,8 @@ const settings: AdapterSettings = {
         method: 'POST',
         path: `/sessions`,
         sendBody: data,
-        selectedData: (res) => res.data.session,
+        selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
+          res.data.session,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -132,7 +152,8 @@ const settings: AdapterSettings = {
         method: 'PUT',
         path: `/sessions/session-tokens/${data.sessionToken}`,
         sendBody: data,
-        selectedData: (res) => res.data.session,
+        selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
+          res.data.session,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -140,7 +161,8 @@ const settings: AdapterSettings = {
       return {
         method: 'DELETE',
         path: `/sessions/session-tokens/${sessionToken}`,
-        selectedData: (res) => res.data.session,
+        selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
+          res.data.session,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -149,7 +171,12 @@ const settings: AdapterSettings = {
         method: 'POST',
         path: `/verification-tokens`,
         sendBody: data,
-        selectedData: (res) => res.data.verificationToken,
+        selectedData: (
+          res: AxiosResponse<
+            { verificationToken: AdapterVerificationToken },
+            any
+          >
+        ) => res.data.verificationToken,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -158,7 +185,12 @@ const settings: AdapterSettings = {
         method: 'PUT',
         path: `/verification-tokens/identifier`,
         sendBody: data,
-        selectedData: (res) => res.data.verificationToken,
+        selectedData: (
+          res: AxiosResponse<
+            { verificationToken: AdapterVerificationToken },
+            any
+          >
+        ) => res.data.verificationToken,
         isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
@@ -177,10 +209,8 @@ export { handler as GET, handler as POST };
 ## Use AxiosInstance
 
 ```ts
-// src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from 'next-auth';
-import AxiosAdapter, { AdapterSettings } from 'next-auth-axios-adapter';
-import axios from 'axios';
+// ...
+import axios, { AxiosResponse } from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
@@ -210,6 +240,7 @@ export { handler as GET, handler as POST };
 ## Configs Method
 
 ```ts
+// ...
 const settings: AdapterSettings = {
   // ...
   configs: {
@@ -220,7 +251,8 @@ const settings: AdapterSettings = {
         method: 'POST', // GET POST PUT PATCH DELETE
         path: '/users',
         sendBody: user, // send body support POST PUT PATCH
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
         requestConfig: { headers: { 'Content-Type': 'application/json' } }, // optional
       };
@@ -231,7 +263,8 @@ const settings: AdapterSettings = {
       return {
         method: 'GET', // GET POST PUT PATCH DELETE
         path: `/users/email/${encodeURIComponent(email)}`,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
         requestConfig: { headers: { 'Content-Type': 'application/json' } }, // optional
       };
@@ -243,7 +276,8 @@ const settings: AdapterSettings = {
         method: 'PUT', // GET POST PUT PATCH DELETE
         path: `/users/${data.id}`,
         sendBody: data, // send body support POST PUT PATCH and If isMongoDb: true (Auto convert id to _id)
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
         requestConfig: { headers: { 'Content-Type': 'application/json' } }, // optional
       };
@@ -254,7 +288,8 @@ const settings: AdapterSettings = {
       return {
         method: 'DELETE', // GET POST PUT PATCH DELETE
         path: `/users/${id}`,
-        selectedData: (res) => res.data.user,
+        selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
+          res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
         requestConfig: { headers: { 'Content-Type': 'application/json' } }, // optional
       };
@@ -262,6 +297,7 @@ const settings: AdapterSettings = {
     // ...
   },
 };
+// ...
 ```
 
 ## Credits and Thanks to inspire me

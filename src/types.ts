@@ -31,7 +31,7 @@ export type AdapterSettings = {
       data: Pick<AdapterAccount, 'providerAccountId' | 'provider'>
     ): ConfigRequestToApiServer<
       Pick<AdapterAccount, 'providerAccountId' | 'provider'>,
-      AdapterAccount
+      AdapterUser
     >;
     updateUser(
       data: Partial<AdapterUser> & Pick<AdapterUser, 'id'>
@@ -55,7 +55,7 @@ export type AdapterSettings = {
       sessionToken: string
     ): ConfigRequestToApiServer<
       { sessionToken: string },
-      { user: AdapterAccount; session: AdapterSession }
+      { user: AdapterUser; session: AdapterSession }
     >;
     createSession(
       data: AdapterSession

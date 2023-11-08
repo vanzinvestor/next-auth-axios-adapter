@@ -88,7 +88,6 @@ export const AxiosAdapter = (
         return null;
       }
     },
-    // @ts-expect-error
     async getUserByAccount(data) {
       // console.log('getUserByAccount', data);
       const opt = settings.configs.getUserByAccount(data);
@@ -206,7 +205,6 @@ export const AxiosAdapter = (
         return null;
       }
     },
-    // @ts-expect-error
     async getSessionAndUser(sessionToken) {
       // console.log('getSessionAndUser', sessionToken);
       const opt = settings.configs.getSessionAndUser(sessionToken);
