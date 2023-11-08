@@ -64,9 +64,9 @@ const settings: AdapterSettings = {
     },
     getUserByEmail(email) {
       return {
-        method: 'POST',
+        method: 'POST', // I prefer POST to GET (send email data)
         path: `/users/email`,
-        sendBody: { email: email }, // optional
+        sendBody: { email: email },
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
         isMongoDb: true, // optional (Auto convert _id to id)
@@ -74,7 +74,7 @@ const settings: AdapterSettings = {
     },
     getUserByAccount(data) {
       return {
-        method: 'POST',
+        method: 'POST', // I prefer POST to GET (send account data)
         path: `/users/account`,
         sendBody: data,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
@@ -113,7 +113,7 @@ const settings: AdapterSettings = {
     },
     unlinkAccount(data) {
       return {
-        method: 'PUT',
+        method: 'PUT', // I prefer PUT to DELETE (send provider data)
         path: `/accounts/delete`,
         sendBody: data,
         selectedData: (res: AxiosResponse<{ account: AdapterAccount }, any>) =>
@@ -182,7 +182,7 @@ const settings: AdapterSettings = {
     },
     useVerificationToken(data) {
       return {
-        method: 'PUT',
+        method: 'PUT', // I prefer PUT to DELETE (send verificationToken data)
         path: `/verification-tokens/identifier`,
         sendBody: data,
         selectedData: (
