@@ -1,0 +1,69 @@
+{
+  "name": "next-auth-axios-adapter",
+  "version": "1.0.0",
+  "description": "Axois adapter is an authentication adapter for NextAuth.js, which offers complete flexibility to authenticate with any server, allowing you to define fully custom HTTP methods and URL paths using Axios",
+  "source": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "compile": "tsc",
+    "clean": "rimraf lib",
+    "test": "mocha --require ts-node/register tests/**/*.spec.ts --exit",
+    "test:coverage": "nyc npm run test",
+    "build": "npm run clean && npm run compile",
+    "prepublishOnly": "npm run test:coverage && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanzinvestor/next-auth-axios-adapter"
+  },
+  "keywords": [
+    "next-auth",
+    "next-auth-adapter",
+    "next.js",
+    "oauth",
+    "axios",
+    "adapter"
+  ],
+  "homepage": "https://github.com/vanzinvestor/next-auth-axios-adapter",
+  "author": "Vanz Investor <vanzinvestor@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "mongoose": "^7.6.2",
+    "next-auth": "^4.23.2"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@next/eslint-plugin-next": "^13.5.4",
+    "@types/mocha": "^10.0.2",
+    "@types/node": "^20.8.6",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": true,
+    "all": true,
+    "include": [
+      "src/**/!(*.test.*).[tj]s?(x)"
+    ],
+    "exclude": [
+      "src/_tests_/**/*.*"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "report-dir": "coverage"
+  }
+}
