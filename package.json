@@ -56,7 +56,9 @@
       "src/**/!(*.test.*).[tj]s?(x)"
     ],
     "exclude": [
-      "src/_tests_/**/*.*"
+      "src/_tests_/**/*.*",
+      "src/index.ts",
+      "src/http-client.ts"
     ],
     "reporter": [
       "html",

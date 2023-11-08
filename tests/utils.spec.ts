@@ -5,6 +5,7 @@ import {
   formatTo,
   isStringObjectId,
   isObjectId,
+  formatToMongoString,
 } from '../src/utils';
 import {
   accountJs,
@@ -128,6 +129,42 @@ describe('Utils tests', function () {
   it('Test formatTo param MockData JavaScript object to Mongoose object', function () {
     assert.equal(
       JSON.stringify(formatTo(mockTestjs)),
+      JSON.stringify(mockTestMongo)
+    );
+  });
+  it('Test formatToMongoString param JavaScript objectId to Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(mockTestJsObjectId)),
+      JSON.stringify(mockTestMongoString)
+    );
+  });
+  it('Test formatToMongoString param User JavaScript object to Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(userJs)),
+      JSON.stringify(userMongo)
+    );
+  });
+  it('Test formatToMongoString param Account Javascript object to Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(accountJs)),
+      JSON.stringify(accountMongo)
+    );
+  });
+  it('Test formatToMongoString param Session JavaScript object to Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(sessionJs)),
+      JSON.stringify(sessionMongo)
+    );
+  });
+  it('Test formatToMongoString param VerificationToken JavaScript object from Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(verificationTokenJs)),
+      JSON.stringify(verificationTokenMongo)
+    );
+  });
+  it('Test formatToMongoString param MockData JavaScript object to Mongoose object', function () {
+    assert.equal(
+      JSON.stringify(formatToMongoString(mockTestjs)),
       JSON.stringify(mockTestMongo)
     );
   });
