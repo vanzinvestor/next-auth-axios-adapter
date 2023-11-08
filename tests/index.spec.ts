@@ -1,6 +1,9 @@
 import assert from 'assert';
 import axios from 'axios';
-import { AxiosAdapter, AdapterSettings } from '../src';
+import AxiosAdapter, {
+  AxiosAdapter as NewAxiosAdapter,
+  AdapterSettings,
+} from '../src';
 import {
   account,
   roleIdString,
@@ -142,6 +145,16 @@ const settings: AdapterSettings = {
 
 describe('Index tests', function () {
   const adapter = AxiosAdapter(axios, settings);
+
+  const newAdapter = NewAxiosAdapter(axios, settings);
+
+  it('Test AxiosAdapter want to default exports', async function () {
+    assert.equal(true, typeof adapter === 'object');
+  });
+
+  it('Test AxiosAdapter want to named exports', async function () {
+    assert.equal(true, typeof newAdapter === 'object');
+  });
 
   it('Test Adapter want to implement createUser', async function () {
     assert.equal(true, typeof adapter.createUser === 'function');
