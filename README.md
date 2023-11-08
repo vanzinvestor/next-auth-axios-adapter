@@ -1,6 +1,6 @@
 # next-auth-axios-adapter
 
-`next-auth-axios-custom-adapter` is an authentication adapter for NextAuth.js, which offers complete flexibility to authenticate with any server, allowing you to define fully custom HTTP methods and URL paths using Axios. This adapter provides an extremely versatile way to integrate NextAuth.js into your Next.js application while adapting to your server's unique authentication requirements.
+`next-auth-axios-adapter` is an authentication adapter for NextAuth.js, which offers complete flexibility to authenticate with any server, allowing you to define fully custom HTTP methods and URL paths using Axios. This adapter provides an extremely versatile way to integrate NextAuth.js into your Next.js application while adapting to your server's unique authentication requirements.
 
 ## Features
 
