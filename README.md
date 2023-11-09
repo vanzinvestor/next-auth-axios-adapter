@@ -41,7 +41,7 @@ import {
 import axios, { AxiosResponse } from 'axios';
 
 const settings: AdapterSettings = {
-  baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}/api`,
+  baseUrl: `${process.env.SERVER_URL}/api`,
   configs: {
     createUser(user) {
       return {
@@ -50,7 +50,6 @@ const settings: AdapterSettings = {
         sendBody: user,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     getUser(id) {
@@ -59,7 +58,6 @@ const settings: AdapterSettings = {
         path: `/users/${id}`,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     getUserByEmail(email) {
@@ -69,7 +67,6 @@ const settings: AdapterSettings = {
         sendBody: { email: email },
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     getUserByAccount(data) {
@@ -79,7 +76,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     updateUser(data) {
@@ -89,7 +85,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     deleteUser(id) {
@@ -98,7 +93,6 @@ const settings: AdapterSettings = {
         path: `/users/${id}`,
         selectedData: (res: AxiosResponse<{ user: AdapterUser }, any>) =>
           res.data.user,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     linkAccount(data) {
@@ -108,7 +102,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ account: AdapterAccount }, any>) =>
           res.data.account,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     unlinkAccount(data) {
@@ -118,7 +111,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ account: AdapterAccount }, any>) =>
           res.data.account,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     getSessionAndUser(sessionToken) {
@@ -134,7 +126,6 @@ const settings: AdapterSettings = {
           user: res.data.user,
           session: res.data.session,
         }),
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     createSession(data) {
@@ -144,7 +135,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
           res.data.session,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     updateSession(data) {
@@ -154,7 +144,6 @@ const settings: AdapterSettings = {
         sendBody: data,
         selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
           res.data.session,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     deleteSession(sessionToken) {
@@ -163,7 +152,6 @@ const settings: AdapterSettings = {
         path: `/sessions/session-tokens/${sessionToken}`,
         selectedData: (res: AxiosResponse<{ session: AdapterSession }, any>) =>
           res.data.session,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     createVerificationToken(data) {
@@ -177,7 +165,6 @@ const settings: AdapterSettings = {
             any
           >
         ) => res.data.verificationToken,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
     useVerificationToken(data) {
@@ -191,7 +178,6 @@ const settings: AdapterSettings = {
             any
           >
         ) => res.data.verificationToken,
-        isMongoDb: true, // optional (Auto convert _id to id)
       };
     },
   },
@@ -213,7 +199,7 @@ export { handler as GET, handler as POST };
 import axios, { AxiosResponse } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     // Authorization: `Bearer ${process.env.SERVER_API_KEY}`,
     'Content-Type': 'application/json',
