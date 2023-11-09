@@ -1,6 +1,6 @@
 {
   "name": "next-auth-axios-adapter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Axois adapter is an authentication adapter for NextAuth.js, which offers complete flexibility to authenticate with any server, allowing you to define fully custom HTTP methods and URL paths using Axios",
   "source": "src/index.ts",
   "main": "lib/index.js",
